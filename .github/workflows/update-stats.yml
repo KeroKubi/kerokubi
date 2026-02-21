@@ -2,26 +2,29 @@ name: Force Refresh Stats Cache
 
 on:
   schedule:
-    # Dit draait elke week op zondag om middernacht (00:00)
+    # Elke zondag om 00:00
     - cron: '0 0 * * 0'
-  workflow_dispatch: # Hiermee kun je het ook handmatig starten
+  workflow_dispatch: # Handmatige trigger
 
 jobs:
   refresh-stats:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write # Nodig om de commit te mogen pushen
     steps:
       - name: Checkout Repo
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Update Cache Buster
         run: |
-          # Dit vervangt v=[nummer] door de huidige tijd (uniek nummer)
-          sed -i "s/&v=[0-9]*/&v=${{ github.run_id }}/g" README.md
+          # Dit zoekt naar v=[getal] en vervangt ALLE instanties door het nieuwe run_id.
+          # We gebruiken een regex die alleen de specifieke v= parameter aanpakt.
+          sed -i "s/v=[0-9]*/v=${{ github.run_id }}/g" README.md
           
       - name: Commit and Push
         run: |
-          git config --global user.name "GitHub Action"
-          git config --global user.email "action@github.com"
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add README.md
-          git commit -m "chore: update stats cache buster" || exit 0
-          git push
+          # Alleen committen als er echt iets veranderd is
+          git diff --quiet && git diff --staged --quiet || (git commit -m "chore: update stats cache buster" && git push)
