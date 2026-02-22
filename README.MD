@@ -57,6 +57,6 @@
 </p>
 
 <div style="display: flex; justify-content: flex-start; gap: 10px;">
-  <img alt="my stats" width="47%" src="https://statss-pink.vercel.app/api?username=KeroKubi&show_icons=true&theme=radical&cache_seconds=300&count_private=true&v=1"/>
-  <img alt="my top languages" width="49%" src="https://statss-pink.vercel.app/api/top-langs/?username=KeroKubi&layout=compact&theme=radical&cache_seconds=300&v=1"/>
+  <img alt="stats" width="47%" src="https://statss-pink.vercel.app/api?username=KeroKubi&show_icons=true&theme=radical&cache_seconds=300&count_private=true&v=1"/>
+  <img alt="langs" width="49%" src="https://statss-pink.vercel.app/api/top-langs/?username=KeroKubi&layout=compact&theme=radical&cache_seconds=300&v=1"/>
 </div>
